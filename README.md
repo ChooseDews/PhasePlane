@@ -2,6 +2,8 @@
 
 This project uses [PixiJs](https://www.pixijs.com/) & [MathJs](https://mathjs.org/index.html) to graph the phase plane of any 2D system. A partical solution is also tracked and traced to the chart (see example output below)
 
+### [Demo](https://choosedews.github.io/PhasePlane/)
+
 ## Fields
 
 The fields are evaluated by [MathJs](https://mathjs.org/index.html) to produce either functions or real numbers. This allows you to use exepected operations within both the x' y' functions feilds and domain feilds. Although the domain must evaluate to a real number.
