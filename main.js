@@ -142,7 +142,7 @@ let drawAllFeildPoints = interval => {
 
 let partical = [0.1, 0.1];
 let stepPatical = function() {
-  let time = 0.05;
+  let time = 0.03;
   let x_step = f(...partical) * time;
   let y_step = g(...partical) * time;
   partical = [partical[0] + x_step, partical[1] + y_step];
@@ -166,7 +166,7 @@ setInterval(function() {
     drawPartical();
     renderer.render(stage);
   }
-}, 200);
+}, 100);
 
 let runtime = () => {
   console.time("Computing Functions");
