@@ -6,19 +6,14 @@ This project uses [PixiJs](https://www.pixijs.com/) & [MathJs](https://mathjs.or
 
 The fields are evaluated by [MathJs](https://mathjs.org/index.html) to produce either functions or real numbers. This allows you to use exepected operations within both the x' y' functions feilds and domain feilds. Although the domain must evaluate to a real number.
 
-
 ## Building
 
 This project uses [Parcel](https://parceljs.org/) to compile which can be installed with `npm install -g parcel`.
 To build and start a developer server use `npm start`.
 To build for production `npm run build`
 
-
-
-
-![Example Phase Plane of a Limit Cycle](/limit_cycle_ex.png)
-![Example Phase Plane of a Vortex](/vortex_ex.png)
-
+![Example Phase Plane of a Limit Cycle](/docs/limit_cycle_ex.png)
+![Example Phase Plane of a Vortex](/docs/vortex_ex.png)
 
 ## Potential Issues
 
