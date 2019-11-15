@@ -1,0 +1,24 @@
+canvas {
+  border: 1px solid white;
+}
+
+body {
+  background: black;
+  max-width: 100vw;
+  overflow-x: hidden;
+  color: white;
+}
+
+
+input {
+  max-width: 100%;
+}
+
+.center {
+  text-align: center;
+}
+
+.settings {
+  width: 100%;
+  height: 96px;
+}
