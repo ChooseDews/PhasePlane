@@ -11,8 +11,6 @@ import "normalize.css/normalize.css";
 import "purecss/build/pure-min.css";
 import "./main.css";
 
-
-
 //Define init functions & bounds
 let x_prime_str = "x-y-x*(3*(x^2+y^2)-(x^2+y^2)^2-1)"; //'2(1-x*x)*y' //"2x-3y+x*y";
 let y_prime_str = "x+y-y*(3*(x^2+y^2)-(x^2+y^2)^2-1)";
@@ -45,8 +43,6 @@ let defineFunctions = x => {
     f = parser.get("f");
     g = parser.get("g");
 
-
-
     x_range = range(x_bounds);
     x_unit_pixels = width / x_range;
     //auto calculate y_bounds to match unit_pixels this should happen most times!
@@ -70,6 +66,12 @@ let coordinateTransform = ([x, y]) => {
     ];
 };
 
+let coordinateReverseTransform = ([x, y]) => {
+    return [
+        map(x, 0, width, x_bounds[0], x_bounds[1]),
+        -map(y, 0, height, y_bounds[0], y_bounds[1])
+    ];
+};
 
 //Init PIXI 
 let stage = new PIXI.Container();
@@ -80,9 +82,8 @@ let renderer = PIXI.autoDetectRenderer({
     width,
     height
 });
-document.body.appendChild(renderer.view);
-
-
+let view = renderer.view;
+document.body.appendChild(view);
 
 //All these are helper functions to plot points, lines, and axis
 let drawPoint = (x, c, r) => {
@@ -92,7 +93,6 @@ let drawPoint = (x, c, r) => {
     graphics.endFill();
     stage.addChild(graphics);
 };
-
 
 let drawLine = (from, to, color, t) => {
     let line = new PIXI.Graphics();
@@ -176,7 +176,6 @@ let drawAllFieldPoints = interval => {
     }
 };
 
-
 let stepParticle = function() {
     let time = 0.00005;
     let x_step = f(...particle) * time;
@@ -209,10 +208,10 @@ let plotPoints = function(points) {
 }
 
 let clear = () => {
-  while (stage.children.length > 0) {
-      let child = stage.getChildAt(0);
-      stage.removeChild(child);
-  }
+    while (stage.children.length > 0) {
+        let child = stage.getChildAt(0);
+        stage.removeChild(child);
+    }
 }
 
 let delay = function(amount) {
@@ -222,11 +221,11 @@ let delay = function(amount) {
 }
 
 let frame = function() {
-    let points = gatherPoints(200, 50);
+    let points = gatherPoints(200, 100);
     let f = points[0];
 
     //bounds checks if the start of end of the 50 fetched points are within frame
-    
+
     let bounds = 0;
     if (
         particle[0] > x_bounds[1] ||
@@ -249,15 +248,25 @@ let frame = function() {
     }
 
     //this delay is just to slow things down a bit
-    delay(100).then(function() {
+    delay(50).then(function() {
         if (loops < limit) { //the limit is how many total steps it wil take any numerical solution
             window.requestAnimationFrame(frame); //ensures we don't over do the machine
         } else {
-            console.log('Over Limit - Animation Stopped'); 
+            console.log('Over Limit - Animation Stopped');
         }
     });
 
 };
+
+function getCursorPosition(canvas, event) {
+    const rect = canvas.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const y = event.clientY - rect.top
+    return {
+        x,
+        y
+    }
+}
 
 let runtime = () => { //Setup the plane with axis and field lines
     console.time("Drawing Plot & Field");
@@ -271,7 +280,6 @@ let runtime = () => { //Setup the plane with axis and field lines
     drawPoint([0, 0], 0x4ce73c, 3);
     console.timeEnd("Drawing Plot & Field");
 };
-
 
 let app = new Vue({
     data() {
@@ -303,14 +311,12 @@ let app = new Vue({
 
             try {
 
+                if (loops >= limit) {
+                    loops = 0;
+                    frame();
+                }
 
-              if (loops >= limit) {
                 loops = 0;
-                frame();
-            }
-        
-            loops = 0;
-
 
                 let yp = this.y_range.split(",");
                 let y_bounds_t = [math.evaluate(yp[0]), math.evaluate(yp[1])].map(Number);
@@ -337,7 +343,6 @@ let app = new Vue({
                 runtime();
                 renderer.render(stage);
 
-
             } catch (e) {
                 console.error(e);
                 alert("Failed To Plot: \n" + String(e)); //attempt to give a useful error
@@ -345,9 +350,16 @@ let app = new Vue({
         }
     },
     created() {
+        let self = this;
         runtime();
         renderer.render(stage);
         frame();
+        view.addEventListener('mousedown', function(e) {
+            let pos = getCursorPosition(view, e);
+            let coord = coordinateReverseTransform([pos.x, pos.y]);
+            self.p_range = math.round(coord[0], 4) + "," + math.round(coord[1], 4);
+            self.update();
+        })
     },
     components: {
         Favorites
