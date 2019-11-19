@@ -4,7 +4,7 @@
 
 <div class="card"  @click="select('x-y-x*(3*(x^2+y^2)-(x^2+y^2)^2-1)', 'x+y-y*(3*(x^2+y^2)-(x^2+y^2)^2-1)',[-4,4],[0.1,0.1])">
 
-<h3>Limit Cycle</h3>
+<h3>Semi-Stable Limit Cycle</h3>
 
 <img class="f-thumb" src="./static/LimitCycle.png" />
 <button @click="select('x-y-x*(3*(x^2+y^2)-(x^2+y^2)^2-1)', 'x+y-y*(3*(x^2+y^2)-(x^2+y^2)^2-1)',[-4,4],[0.1,0.1])" class="button-success pure-button button-small mt pure-button-active">View</button>
