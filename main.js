@@ -6,6 +6,13 @@ import * as math from "mathjs";
 import Vue from "vue/dist/vue.js";
 import Favorites from "./favorites.vue"; //parcle has a build in vue compiler
 
+//import css
+import "normalize.css/normalize.css";
+import "purecss/build/pure-min.css";
+import "./main.css";
+
+
+
 //Define init functions & bounds
 let x_prime_str = "x-y-x*(3*(x^2+y^2)-(x^2+y^2)^2-1)"; //'2(1-x*x)*y' //"2x-3y+x*y";
 let y_prime_str = "x+y-y*(3*(x^2+y^2)-(x^2+y^2)^2-1)";
