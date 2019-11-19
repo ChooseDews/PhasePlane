@@ -38,12 +38,7 @@ let defineFunctions = x => {
     f = parser.get("f");
     g = parser.get("g");
 
-    if (loops >= limit) {
-        loops = 0;
-        frame();
-    }
 
-    loops = 0;
 
     x_range = range(x_bounds);
     x_unit_pixels = width / x_range;
@@ -300,6 +295,15 @@ let app = new Vue({
         update() { //main entry
 
             try {
+
+
+              if (loops >= limit) {
+                loops = 0;
+                frame();
+            }
+        
+            loops = 0;
+
 
                 let yp = this.y_range.split(",");
                 let y_bounds_t = [math.evaluate(yp[0]), math.evaluate(yp[1])].map(Number);
