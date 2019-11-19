@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel index.html",
-    "build": "parcel build index.html",
-    "postinstall": "npm install -g parcle"
+    "build": "parcel build index.html -d docs --public-url ./",
+    "postinstall": "npm install -g parcel"
   },
   "author": "John Dews-Flick",
   "license": "MIT",
@@ -17,6 +17,12 @@
     "mathjs": "^6.2.3",
     "normalize.css": "^8.0.1",
     "pixi.js": "^5.2.0",
-    "vue": "^2.6.10"
+    "purecss": "^1.0.1",
+    "vue": "^2.6.10",
+    "vue-hot-reload-api": "^2.3.4"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.0.2",
+    "vue-template-compiler": "^2.6.10"
   }
 }

@@ -14,8 +14,8 @@ This project uses [Parcel](https://parceljs.org/) to compile which can be instal
 To build and start a developer server use `npm start`.
 To build for production `npm run build`
 
-![Example Phase Plane of a Limit Cycle](/docs/limit_cycle_ex.png)
-![Example Phase Plane of a Vortex](/docs/vortex_ex.png)
+![Example Phase Plane of a Limit Cycle](/static/limit_cycle_ex.png)
+![Example Phase Plane of a Vortex](/static/vortex_ex.png)
 
 ## Potential Issues
 

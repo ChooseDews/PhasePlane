@@ -1,13 +1,21 @@
 import * as PIXI from "pixi.js";
 import * as math from "mathjs";
 import Vue from "vue/dist/vue.js";
+
+import Favorites from "./favorites.vue"; //parcle has a build in vue compiler
+
+
 let x_prime_str = "x-y-x*(3*(x^2+y^2)-(x^2+y^2)^2-1)"; //'2(1-x*x)*y' //"2x-3y+x*y";
 let y_prime_str = "x+y-y*(3*(x^2+y^2)-(x^2+y^2)^2-1)";
 let f, g;
 var width = window.innerWidth - 2;
 var height = window.innerHeight - 102;
 let x_bounds = [-4, 4];
-let y_bounds = [-4, 4];
+let y_bounds = null;
+
+
+
+
 let range = a => a[1] - a[0];
 let x_range, y_range;
 let x_unit_pixels, y_unit_pixels;
@@ -29,10 +37,23 @@ let defineFunctions = x => {
   g = parser.get("g");
 
   x_range = range(x_bounds);
-  y_range = range(y_bounds);
   x_unit_pixels = width / x_range;
+
+    if(!y_bounds){
+      y_range = math.round(height/x_unit_pixels, 2);
+    y_bounds = [-y_range/2, y_range/2];
+    }
+  
+
+
+  y_range = range(y_bounds);
   y_unit_pixels = height / y_range;
+
+
+
 };
+
+defineFunctions();
 
 let coordinateTransform = ([x, y]) => {
   return [
@@ -87,8 +108,13 @@ let drawYAxis = (color, t) => {
 
 let drawYAxisText = (color, t, interval) => {
   if (!interval) interval = y_range / 20;
-  if (x_range > 2) interval = math.ceil(interval);
-  for (let i = y_bounds[0]; i <= y_bounds[1]; i = i + interval) {
+  let s = y_bounds[0];
+  if (y_range > 2){ 
+    interval = math.ceil(interval);
+    s = math.ceil(s);
+  }
+
+  for (let i = s; i <= y_bounds[1]; i = i + interval) {
     if (i == 0) continue;
     drawText([4 / x_unit_pixels, i + 4 / x_unit_pixels], math.round(i, 2), 10);
   }
@@ -96,8 +122,12 @@ let drawYAxisText = (color, t, interval) => {
 
 let drawXAxisText = (color, t, interval) => {
   if (!interval) interval = x_range / 20;
-  if (x_range > 2) interval = math.ceil(interval);
-  for (let i = x_bounds[0]; i <= x_bounds[1]; i = i + interval) {
+  let s = x_bounds[0];
+  if (x_range > 2){ 
+    interval = math.ceil(interval);
+    s = math.ceil(s);
+  }
+  for (let i = s; i <= x_bounds[1]; i = i + interval) {
     drawText([i + 4 / x_unit_pixels, 11 / y_unit_pixels], math.round(i, 2), 10);
   }
 };
@@ -142,9 +172,9 @@ let drawAllFeildPoints = interval => {
 
 let partical = [0.1, 0.1];
 let stepPatical = function() {
-  let time = 0.03;
-  let x_step = f(...partical) * time;
-  let y_step = g(...partical) * time;
+  let time = 0.00005;
+  let x_step = f(...partical) * time * 0.999999;
+  let y_step = g(...partical) * time * 0.99999;
   partical = [partical[0] + x_step, partical[1] + y_step];
 };
 
@@ -153,7 +183,7 @@ let drawPartical = function() {
 };
 
 setInterval(function() {
-  for (let step = 0; step < 2; step++) {
+  for (let step = 0; step < 400; step++) {
     stepPatical();
   }
   if (
@@ -166,7 +196,7 @@ setInterval(function() {
     drawPartical();
     renderer.render(stage);
   }
-}, 100);
+}, 10);
 
 let runtime = () => {
   console.time("Computing Functions");
@@ -200,6 +230,7 @@ let clear = () => {
 var app = new Vue({
   data() {
     return {
+      showExamples: false,
       text: "Hello, World",
       x_prime: x_prime_str,
       y_prime: y_prime_str,
@@ -209,6 +240,31 @@ var app = new Vue({
     };
   },
   methods: {
+    toggleExample(){
+      this.showExamples = !this.showExamples;
+    },
+    select(x_p, y_p, x_range, p_start){
+      console.log('got it!',x_p, y_p, x_range, p_start)
+
+      this.x_prime = x_p;
+      this.y_prime = y_p;
+      this.x_range = x_range[0] + "," + x_range[1];
+      this.p_range = p_start[0] + "," + p_start[1];
+      this.showExamples = false;
+
+      y_range = math.round(height/x_unit_pixels, 2);
+      y_bounds = [-y_range/2, y_range/2];
+
+      this.y_range = y_bounds[0] + "," + y_bounds[1];
+
+
+      this.update();
+
+
+
+
+
+    },
     update() {
       try {
         x_prime_str = this.x_prime;
@@ -237,5 +293,6 @@ var app = new Vue({
   created() {
     runtime();
     renderer.render(stage);
-  }
+  },
+  components: {Favorites}
 }).$mount("#app");

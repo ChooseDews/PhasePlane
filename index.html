@@ -15,46 +15,85 @@
 
       <div class="row">
 
-        <div class="col-2 p-3 pl-4">
-          <h2 class="m-0">Phase Plane Grapher</h2>
+        <div class="col p-1 pl-4">
+          <h2 class="m-0 pt-3">Phase Plane Grapher</h2>
           <p class="m-0">John Dews-Flick 2019</p>
         </div>
 
-        <div class="col-2 center p-3">
-          <h3 class="m-0">X'</h3>
-          <input type="text" v-model="x_prime" placeholder="dx/dt function">
+        
+
+        <div class="col center p-1">
+
+            <div class="pure-control-group m1">
+                <label for="name">X'</label>
+                <input type="text" v-model="x_prime" placeholder="dx/dt function">
+            </div>
+            <div class="pure-control-group m1">
+                <label for="name">Y'</label>
+                <input type="text" v-model="y_prime" placeholder="dy/dt function">
+            </div>
+
+
+
+
+        
         </div>
 
-        <div class="col-2 center p-3">
-          <h3 class="m-0">Y'</h3>
-          <input type="text" v-model="y_prime" placeholder="dy/dt function">
+
+
+        <div class="col center p-1">
+
+            <div class="pure-control-group m1">
+                <label for="name">X Range</label>
+                <input type="text" style="max-width: 80px;" v-model="x_range" placeholder="a,b">
+              </div>
+            <div class="pure-control-group m1">
+                <label for="name">Y Range</label>
+                <input type="text" style="max-width: 80px;" v-model="y_range" placeholder="a,b">
+              </div>
+        
         </div>
 
-        <div class="col-1 center p-3">
-          <h3 class="m-0">X Range</h3>
-          <input type="text" v-model="x_range" placeholder="a,b">
-        </div>
-        <div class="col-1 center p-3">
-          <h3 class="m-0">Y Range</h3>
-          <input type="text" v-model="y_range" placeholder="a,b">
+     
+        <div class="col  p-1">
+        
+          <div class="pure-control-group m1">
+              <label for="name">Start Point</label>
+              <input type="text" style="max-width: 80px;" v-model="p_range" placeholder="x,y">
+            </div>
+
+
+
+
         </div>
 
-        <div class="col-1 center p-3">
-          <h3 class="m-0">Start Point</h3>
-          <input type="text" v-model="p_range" placeholder="x,y">
-        </div>
+        <div class="col p-2 pt-4">
 
-        <div class="col-2 center p-3 pt-4">
-          <button @click="update()">Update Plot</button>
+            <button @click="update()" class="button-success pure-button button-small mt pure-button-active">Update Plot</button><br>
+            <button @click="toggleExample()" class="pure-button mt-1 button-xs-small mt pure-button-active">Examples</button><br>
+
+
+
+        
         </div>
 
       </div>
 
 
+    
     </div>
-    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap-grid.min.css">
+
+<Favorites v-show="showExamples" @select="select"></Favorites>
+
+    </div>
+
+
     <link rel="stylesheet" href="./node_modules/normalize.css/normalize.css">
+    <link rel="stylesheet" href="./node_modules/purecss/build/pure-min.css">
     <link rel="stylesheet" href="./main.css">
+
+
+
     <script src="./main.js"></script>
 
 </body>

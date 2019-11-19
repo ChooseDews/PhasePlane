@@ -12,6 +12,7 @@ body {
 
 input {
   max-width: 100%;
+  color: black;
 }
 
 .center {
@@ -21,4 +22,64 @@ input {
 .settings {
   width: 100%;
   height: 96px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.button-small {
+  font-size: 85%;
+}
+
+.button-xs-small{
+  font-size: 75%;
+
+}
+
+
+.p-1{
+  padding: 5px;
+}
+
+.p-2{
+  padding: 10px;
+}
+
+.mt-1{
+  margin-top: 5px;
+}
+
+.pt-3{
+  padding-top: 15px;
+}
+
+.pl-4{
+  padding-left: 20px;
+}
+
+.m-0{
+  margin: 0;
+}
+
+.m1{
+  margin: 5px;
+}
+
+.col{
+  float: left;
+  display: block;
+  max-width: 400px;
+}
+
+
+.button-success,
+.button-error,
+.button-warning,
+.button-secondary {
+  color: white;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.button-success {
+  background: rgb(28, 184, 65); /* this is a green */
 }
