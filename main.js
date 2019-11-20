@@ -176,11 +176,11 @@ let drawAllFieldPoints = interval => {
     }
 };
 
+
+const time = 0.00005;
 let stepParticle = function() {
-    let time = 0.00005;
-    let x_step = f(...particle) * time;
-    let y_step = g(...particle) * time;
-    particle = [particle[0] + x_step, particle[1] + y_step];
+    particle[0] = particle[0]+f(...particle) * time;
+    particle[1] = particle[1]+g(...particle) * time;
 };
 
 let drawParticle = function(p) {
@@ -221,7 +221,7 @@ let delay = function(amount) {
 }
 
 let frame = function() {
-    let points = gatherPoints(200, 100);
+    let points = gatherPoints(100, 50);
     let f = points[0];
 
     //bounds checks if the start of end of the 50 fetched points are within frame
@@ -248,7 +248,7 @@ let frame = function() {
     }
 
     //this delay is just to slow things down a bit
-    delay(50).then(function() {
+    delay(0).then(function() {
         if (loops < limit) { //the limit is how many total steps it wil take any numerical solution
             window.requestAnimationFrame(frame); //ensures we don't over do the machine
         } else {
